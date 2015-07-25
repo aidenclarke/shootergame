@@ -21,10 +21,10 @@ function update() {
   ship.body.velocity.x = 0;
   ship.body.velocity.y = 0;
   if (cursors.up.isDown) {
-    ship.body.velocity.y = -1000;
+    ship.body.velocity.y = -300;
   }
   else if (cursors.down.isDown) {
-    ship.body.velocity.y = 1000;
+    ship.body.velocity.y = 300;
   }
 }
 
