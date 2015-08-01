@@ -19,7 +19,7 @@ function preload() {
 
 function create() {
   background = game.add.tileSprite(0,0,800,600,'background');
-  background.autoScroll(-10000,10000);
+  background.autoScroll(-300,1);
   missle = game.add.sprite(20,300,'missle');
   ship = game.add.sprite(20,300,'ship');
   //enemy = game.add.sprite(600,300,'enemy');
