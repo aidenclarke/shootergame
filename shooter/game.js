@@ -4,42 +4,116 @@ var game = new Phaser.Game(800,600,Phaser.AUTO,'game',
   {preload:preload,create:create,update:update,render:render});
 
 var ship;
-var background;
+var space;
 var cursors;
-//var enemy;
+var enemy;
 var missle;
 
 function preload() {
   game.stage.backgroundColor = '#66FFFF';
-  game.load.image('background', 'background.png');
+  game.load.image('space', 'space.gif');
   game.load.image('ship', 'ship.gif');
   game.load.image('missle','missle.gif');
-  //game.load.image('enemy', 'enemy.gif');
+  game.load.image('enemy', 'enemy.gif');
 }
 
 function create() {
-  background = game.add.tileSprite(0,0,800,600,'background');
-  background.autoScroll(-300,1);
-  missle = game.add.sprite(20,300,'missle');
+  space = game.add.tileSprite(0,0,800,600,'space');
+  space.autoScroll(-300,1);
+  missle = game.add.sprite(15,300,'missle');
   ship = game.add.sprite(20,300,'ship');
-  //enemy = game.add.sprite(600,300,'enemy');
+  enemy = game.add.sprite(600,300,'enemy');
   game.physics.enable(ship, Phaser.Physics.ARCADE);
+  game.physics.enable(missle, Phaser.Physics.ARCADE);
+  game.physics.enable(enemy, Phaser.Physics.ARCADE);
   cursors = game.input.keyboard.createCursorKeys();
 }
 
 function update() {
   ship.body.velocity.x = 0;
   ship.body.velocity.y = 0;
-  missle.x = ship.x;
-  missle.y = ship.y;
+
+  if (! missle.shooting) {
+    missle.body.velocity.x = 0;
+    missle.body.velocity.y = 0;
+  }
+
+  if (missle.x > 820) {
+    missle.shooting = false;
+    missle.x = ship.x;
+    missle.y = ship.y;
+  }
+
+
   if (cursors.up.isDown) {
-    ship.body.velocity.y = -1000;
+    ship.body.velocity.y = -300;
+    if (! missle.shooting) {
+      missle.body.velocity.y = -300;
+    }
   }
+
   else if (cursors.down.isDown) {
-    ship.body.velocity.y = 1000;
+    ship.body.velocity.y = 300;
+    if (! missle.shooting) {
+      missle.body.velocity.y = 300;
+    }
   }
+
+  if (cursors.left.isDown) {
+    ship.body.velocity.x = -300;
+    if (! missle.shooting) {
+      missle.body.velocity.x = -300;
+    }
+  }
+
+  if (cursors.right.isDown) {
+    ship.body.velocity.x = 300;
+    if (! missle.shooting) {
+      missle.body.velocity.x = 300;
+    }
+  }
+
   if (game.input.keyboard.isDown(Phaser.Keyboard.SPACEBAR)) {
-    console.log("yolo")
+    missle.body.velocity.x = 1000;
+    missle.shooting = true;
+  }
+
+  if (game.input.keyboard.isDown(Phaser.Keyboard.W)) {
+    ship.body.velocity.y = -300;
+    if (! missle.shooting) {
+      missle.body.velocity.y = -300;
+    }
+  }
+
+  if (game.input.keyboard.isDown(Phaser.Keyboard.S)) {
+    ship.body.velocity.y = 300;
+    if (! missle.shooting) {
+      missle.body.velocity.y = 300;
+    }
+  }
+  
+
+  if (game.input.keyboard.isDown(Phaser.Keyboard.A)) {
+    ship.body.velocity.x = -300;
+    if (! missle.shooting) {
+      missle.body.velocity.x = -300;
+    } 
+  }
+  
+
+  if (game.input.keyboard.isDown(Phaser.Keyboard.D)) {
+    ship.body.velocity.x = 300;
+    if (! missle.shooting) {
+      missle.body.velocity.x = 300;
+    }
+  }
+
+  if (game.input.keyboard.isDown(Phaser.Keyboard.J)) {
+    console.log("You are not allowed to see this. Why would you even press the letter J? What random thought occoured in your head to press the letter 'J'? like wow! I wrote this whole line of code just to ask you this question. PLEASE DO NOT PRESS THE LETTER 'O'!")
+  }
+  
+  if (game.input.keyboard.isDown(Phaser.Keyboard.O)) {
+    console.log("You asked for this. Go here. http://www.theworldsworstwebsiteever.com/")
   }
 }
 
