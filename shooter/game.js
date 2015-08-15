@@ -8,6 +8,7 @@ var space;
 var cursors;
 var enemy;
 var missle;
+var death;
 
 function preload() {
   game.stage.backgroundColor = '#66FFFF';
@@ -15,12 +16,13 @@ function preload() {
   game.load.image('ship', 'ship.gif');
   game.load.image('missle','missle.gif');
   game.load.image('enemy', 'enemy.gif');
+  game.load.image('death', 'death.gif');
 }
 
 function create() {
   space = game.add.tileSprite(0,0,800,600,'space');
   space.autoScroll(-300,1);
-  missle = game.add.sprite(15,300,'missle');
+  missle = game.add.sprite(25,300,'missle');
   ship = game.add.sprite(20,300,'ship');
   enemy = game.add.sprite(600,300,'enemy');
   game.physics.enable(ship, Phaser.Physics.ARCADE);
@@ -30,18 +32,22 @@ function create() {
 }
 
 function update() {
+  game.physics.arcade.overlap(missle, enemy, collisionHandler, null, this);
+
   ship.body.velocity.x = 0;
   ship.body.velocity.y = 0;
+
 
   if (! missle.shooting) {
     missle.body.velocity.x = 0;
     missle.body.velocity.y = 0;
+    missle.x = ship.x + 10;
+    missle.y = ship.y + 1;
+    missle.renderable = true;
   }
 
   if (missle.x > 820) {
-    missle.shooting = false;
-    missle.x = ship.x;
-    missle.y = ship.y;
+    missleReset();
   }
 
 
@@ -118,4 +124,21 @@ function update() {
 }
 
 function render() {
+}
+
+function collisionHandler(missle, enemy) {
+  missleReset();
+  repositionEnemy();
+}
+
+
+function missleReset() {
+  missle.shooting = false;
+  missle.body.velocity.x = 0;
+  missle.body.velocity.y = 0;
+}
+
+function repositionEnemy() {
+  enemy.x = game.rnd.integerInRange(100, 780);
+  enemy.y = game.rnd.integerInRange(20, 540);
 }
