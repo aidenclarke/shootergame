@@ -16,7 +16,7 @@ function preload() {
   game.load.image('ship', 'ship.gif');
   game.load.image('missle','missle.gif');
   game.load.image('enemy', 'enemy.gif');
-  game.load.image('death', 'death.gif');
+  game.load.image('death', 'death.png');
 }
 
 function create() {
@@ -33,6 +33,7 @@ function create() {
 
 function update() {
   game.physics.arcade.overlap(missle, enemy, collisionHandler, null, this);
+  game.physics.arcade.overlap(ship, enemy, collisionHandler2, null, this);
 
   ship.body.velocity.x = 0;
   ship.body.velocity.y = 0;
@@ -129,6 +130,13 @@ function render() {
 function collisionHandler(missle, enemy) {
   missleReset();
   repositionEnemy();
+}
+
+function collisionHandler2(ship, enemy) {
+  missle.kill()
+  enemy.kill()
+  ship.kill()
+  death = game.add.sprite(300,300,'death')
 }
 
 
