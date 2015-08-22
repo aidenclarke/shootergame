@@ -133,10 +133,10 @@ function collisionHandler(missle, enemy) {
 }
 
 function collisionHandler2(ship, enemy) {
-  missle.kill()
-  enemy.kill()
-  ship.kill()
-  death = game.add.sprite(300,300,'death')
+  missle.kill();
+  enemy.kill();
+  ship.kill();
+  death = game.add.sprite(300,300,'death');
 }
 
 
